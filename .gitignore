@@ -1,0 +1,4 @@
+*.pbxuser,*.xcuserstate,*.hmap,
+*.ipa,
+*.dSYM.zip,
+*.dSYM
