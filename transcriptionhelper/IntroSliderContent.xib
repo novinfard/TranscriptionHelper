@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <viewController modalPresentationStyle="pageSheet" id="Rox-Ff-D9u" customClass="PageContentViewController">
+            <layoutGuides>
+                <viewControllerLayoutGuide type="top" id="6f0-di-VYf"/>
+                <viewControllerLayoutGuide type="bottom" id="AXD-SX-0lG"/>
+            </layoutGuides>
+            <view key="view" contentMode="scaleToFill" id="lYa-vY-ahg">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Intro description text" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D8x-9U-g0t">
+                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                        <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Intro Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GEh-Ov-xtC">
+                        <constraints>
+                            <constraint firstAttribute="height" constant="53" id="7Gi-h1-9Ba"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="29"/>
+                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                        <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </label>
+                </subviews>
+                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                <constraints>
+                    <constraint firstItem="D8x-9U-g0t" firstAttribute="trailing" secondItem="GEh-Ov-xtC" secondAttribute="trailing" id="2yB-kj-MMS"/>
+                    <constraint firstItem="D8x-9U-g0t" firstAttribute="leading" secondItem="lYa-vY-ahg" secondAttribute="leadingMargin" id="B10-Mz-TXI"/>
+                    <constraint firstItem="GEh-Ov-xtC" firstAttribute="trailing" secondItem="lYa-vY-ahg" secondAttribute="trailingMargin" id="KJR-gh-blc"/>
+                    <constraint firstItem="AXD-SX-0lG" firstAttribute="top" secondItem="GEh-Ov-xtC" secondAttribute="bottom" constant="163" id="Wmm-Gl-h1k"/>
+                    <constraint firstItem="GEh-Ov-xtC" firstAttribute="top" secondItem="6f0-di-VYf" secondAttribute="bottom" constant="364" id="o8I-8C-duR"/>
+                    <constraint firstItem="GEh-Ov-xtC" firstAttribute="leading" secondItem="D8x-9U-g0t" secondAttribute="leading" id="r9e-0O-d3w"/>
+                    <constraint firstItem="D8x-9U-g0t" firstAttribute="top" secondItem="GEh-Ov-xtC" secondAttribute="bottom" id="t59-P4-4VW"/>
+                    <constraint firstAttribute="bottom" secondItem="D8x-9U-g0t" secondAttribute="bottom" constant="20" symbolic="YES" id="yw2-tP-nC5"/>
+                </constraints>
+                <variation key="default">
+                    <mask key="constraints">
+                        <exclude reference="o8I-8C-duR"/>
+                    </mask>
+                </variation>
+            </view>
+            <connections>
+                <outlet property="textDesc" destination="D8x-9U-g0t" id="36a-uO-zRi"/>
+                <outlet property="textLabel" destination="GEh-Ov-xtC" id="mQg-Jv-bUa"/>
+            </connections>
+            <point key="canvasLocation" x="340" y="345"/>
+        </viewController>
+    </objects>
+</document>
