@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:/Users/novinfard/Xcode/itranscribe/transcriptionhelper.xcodeproj">
+      location = "group:transcriptionhelper.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">
