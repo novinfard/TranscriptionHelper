@@ -86,6 +86,8 @@
     // screen's size
     CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
     CGFloat screenHeight = [UIScreen mainScreen].bounds.size.height;
+	
+	NSLog(@"%f", screenHeight);
     
     CGFloat width, height, origX, origY;
     width = height = MAX(screenHeight, screenWidth);
@@ -126,7 +128,7 @@
     [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
     
     // Change the size of page view controller
-    self.pageViewController.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-50);
+    self.pageViewController.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-100);
     
     [self addChildViewController:_pageViewController];
     [self.view addSubview:_pageViewController.view];

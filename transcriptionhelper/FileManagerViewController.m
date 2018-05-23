@@ -31,6 +31,11 @@
     [super viewDidLoad];
     self.filesTable.delegate = self;
     self.filesTable.dataSource = self;
+	
+//	NSArray       *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+//	NSString  *documentsDirectory = [paths objectAtIndex:0];
+//	NSLog(@"%@", documentsDirectory);
+
     
     UINib *nibFilesCell = [UINib nibWithNibName:@"FilesTableViewCell" bundle:nil];
     [self.filesTable registerNib:nibFilesCell forCellReuseIdentifier:@"files"];
@@ -172,75 +177,63 @@
     
     NSURLRequest *request = [NSURLRequest requestWithURL:URL];
     
-    // Step 2: save downloading file's name
-    // For example our fileName string is equal to 'jrqzn4q29vwy4mors75s_400x400.png'
-    NSString *fileName = [URL lastPathComponent];
-    
-    // Step 3: create AFHTTPRequestOperation object with our request
-    AFHTTPRequestOperation *downloadRequest = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-    
-    // Step 4: set handling for answer from server and errors with request
-    [downloadRequest setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-        // here we must create NSData object with received data...
-        NSData *data = [[NSData alloc] initWithData:responseObject];
-        // ... and save this object as file
-        // Here 'pathToFile' must be path to directory 'Documents' on your device + filename, of course
-        
-                NSArray       *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-                NSString  *documentsDirectory = [paths objectAtIndex:0];
-        
-                NSString  *filePath = [NSString stringWithFormat:@"%@/%@", documentsDirectory,fileName];
+		
+		NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+		AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
+		
+		NSURLSessionDownloadTask *downloadTask = [manager downloadTaskWithRequest:request progress:^(NSProgress * _Nonnull downloadProgress) {
+			
+			dispatch_async(dispatch_get_main_queue(), ^{
+				//Update the progress view
+//				[_myProgressView setProgress:downloadProgress.fractionCompleted];
+				hud.progress = downloadProgress.fractionCompleted;
+			});
+			
+			
+			
+		}
+												  
+		destination:^NSURL *(NSURL *targetPath, NSURLResponse *response) {
+			NSURL *documentsDirectoryURL = [[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:nil];
+			
+			// Step 2: save downloading file's name
+			// For example our fileName string is equal to 'jrqzn4q29vwy4mors75s_400x400.png'
+//			NSString *fileName = [URL lastPathComponent];
 
-//        NSLog(@"successful %@" , filePath);
-        
-        if([[filePath pathExtension] isEqualToString:@"mp3"]) {
-            [data writeToFile:filePath atomically:YES];
-            
-            [self putFilesList];
-            [self.filesTable reloadData];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [MBProgressHUD hideHUDForView:self.view animated:YES];
-            });
-        } else {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [MBProgressHUD hideHUDForView:self.view animated:YES];
-            });
-            UIAlertView *alertView = [[UIAlertView alloc]
-                                      initWithTitle:@"Error: MP3 File"
-                                      message:@"It is not an mp3 file"
-                                      delegate:nil
-                                      cancelButtonTitle:@"OK"
-                                      otherButtonTitles:nil];
-            [alertView show];
-        }
-        
+//			NSArray       *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+//			NSString  *documentsDirectory = [paths objectAtIndex:0];
+//
+//			NSString  *filePath = [NSString stringWithFormat:@"%@/%@", documentsDirectory,fileName];
+//
+//			//        NSLog(@"successful %@" , filePath);
 
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//        NSLog(@"file downloading error : %@", [error localizedDescription]);
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [MBProgressHUD hideHUDForView:self.view animated:YES];
-        });
-        
-        UIAlertView *alertView = [[UIAlertView alloc]
-                                  initWithTitle:@"Error"
-                                  message:@"Could not download the file"
-                                  delegate:nil
-                                  cancelButtonTitle:@"OK"
-                                  otherButtonTitles:nil];
-        [alertView show];
+			
+			return [documentsDirectoryURL URLByAppendingPathComponent:[response suggestedFilename]];
+		} completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
+			NSLog(@"File downloaded to: %@", filePath);
+			
+			if([[filePath pathExtension] isEqualToString:@"mp3"]) {
+				
+				[self putFilesList];
+				[self.filesTable reloadData];
+				dispatch_async(dispatch_get_main_queue(), ^{
+					[MBProgressHUD hideHUDForView:self.view animated:YES];
+				});
+			} else {
+				dispatch_async(dispatch_get_main_queue(), ^{
+					[MBProgressHUD hideHUDForView:self.view animated:YES];
+				});
+				UIAlertView *alertView = [[UIAlertView alloc]
+										  initWithTitle:@"Error: MP3 File"
+										  message:@"It is not an mp3 file"
+										  delegate:nil
+										  cancelButtonTitle:@"OK"
+										  otherButtonTitles:nil];
+				[alertView show];
+			}
 
-    }];
-    
-    [downloadRequest setDownloadProgressBlock:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
-        float progress =  (float)totalBytesRead / totalBytesExpectedToRead;
-        hud.progress = progress;
-    }];
-        
-        
-    
-    // Step 5: begin asynchronous download
-    [downloadRequest start];
+		}];
+		[downloadTask resume];
         
     });
 

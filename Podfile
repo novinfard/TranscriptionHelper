@@ -1,6 +1,11 @@
+project 'transcriptionhelper.xcodeproj'
+
 platform :ios, '8.0'
-use_frameworks!
-pod 'AFNetworking', '~> 2.6'
-pod 'MBProgressHUD', '~> 1.0.0'
-pod 'Fabric'
-pod 'Crashlytics'
+
+target 'transcriptionhelper' do
+    use_frameworks!
+    pod 'AFNetworking'
+    pod 'MBProgressHUD'
+    pod 'Fabric'
+    pod 'Crashlytics'
+end

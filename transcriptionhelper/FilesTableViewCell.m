@@ -22,6 +22,7 @@
 }
 
 -(void)prepareForReuse {
+	[super prepareForReuse];
     self.fileImage.image = nil;
     self.fileTitle.text = @"";
     self.fileAlbum.text = @"";
